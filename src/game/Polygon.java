@@ -69,7 +69,7 @@ class Polygon {
         crossingNumber++;
       }
     }
-    return crossingNumber%2 == 1;
+    return crossingNumber % 2 == 1;
   }
   
   public void rotate(int degrees) {rotation = (rotation+degrees)%360;}

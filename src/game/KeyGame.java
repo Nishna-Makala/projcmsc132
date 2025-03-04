@@ -1,4 +1,6 @@
 package game;
+import java.awt.Graphics;
+
 
 /*
 CLASS: YourGameNameoids
@@ -17,11 +19,13 @@ class KeyGame extends Game {
     super("KeyGame!!!", 800, 600);
     this.setFocusable(true);
 	this.requestFocus();
+	BreakableBlock testBlock =  new BreakableBlock();
   }
   
 	public void paint(Graphics brush) {
     	brush.setColor(Color.black);
     	brush.fillRect(0,0,width,height);
+    	testBlock.paint(brush);
     	
     	// sample code for printing message for debugging
     	// counter is incremented and this message printed
