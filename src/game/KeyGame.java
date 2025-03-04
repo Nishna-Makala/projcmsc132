@@ -20,10 +20,10 @@ class KeyGame extends Game implements KeyListener{
     this.setFocusable(true);
 	this.requestFocus();
 	this.addKeyListener(this);
+	MainCharacter = new Player();
   }
   
 	public void paint(Graphics brush) {
-		Player MainCharacter = new Player();
     	brush.setColor(Color.black);
     	brush.fillRect(0,0,width,height);
     	
@@ -41,10 +41,20 @@ class KeyGame extends Game implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			leftArrowPressed = true;
-		}
-		
+            if (MainCharacter != null && !MainCharacter.lookingLeft) {
+                MainCharacter.reflect(); 
+                MainCharacter.lookingLeft = true;
+            }
+        } 
 		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			rightArrowPressed = true;
+            rightArrowPressed = true;
+            if (MainCharacter != null && MainCharacter.lookingLeft) {
+                MainCharacter.reflect(); 
+                MainCharacter.lookingLeft = false;
+            }
+        }
+		else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			MainCharacter.jump();
 		}
 	}
 	
