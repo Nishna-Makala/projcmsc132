@@ -12,6 +12,7 @@ import java.awt.event.*;
 
 class KeyGame extends Game {
 	static int counter = 0;
+	static Player MainCharacter;
 
   public KeyGame() {
     super("KeyGame!!!", 800, 600);
@@ -20,6 +21,7 @@ class KeyGame extends Game {
   }
   
 	public void paint(Graphics brush) {
+		Player MainCharacter = new Player();
     	brush.setColor(Color.black);
     	brush.fillRect(0,0,width,height);
     	
@@ -29,11 +31,14 @@ class KeyGame extends Game {
     	counter++;
     	brush.setColor(Color.white);
     	brush.drawString("Counter is " + counter,10,10);
+    	brush.setColor(Color.pink);
+    	MainCharacter.paint(brush);
   }
   
 	public static void main (String[] args) {
 		KeyGame a = new KeyGame();
 		a.repaint();
+		Player MainCharacter = new Player();
   }
 	
 }
