@@ -10,14 +10,16 @@ NOTE: This class is the metaphorical "main method" of your program,
 import java.awt.*;
 import java.awt.event.*;
 
-class KeyGame extends Game {
+class KeyGame extends Game implements KeyListener{
 	static int counter = 0;
 	static Player MainCharacter;
+	static boolean leftArrowPressed, rightArrowPressed;
 
   public KeyGame() {
     super("KeyGame!!!", 800, 600);
     this.setFocusable(true);
 	this.requestFocus();
+	this.addKeyListener(this);
   }
   
 	public void paint(Graphics brush) {
@@ -32,13 +34,37 @@ class KeyGame extends Game {
     	brush.setColor(Color.white);
     	brush.drawString("Counter is " + counter,10,10);
     	brush.setColor(Color.pink);
+    	MainCharacter.move(leftArrowPressed, rightArrowPressed);
     	MainCharacter.paint(brush);
   }
+	
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			leftArrowPressed = true;
+		}
+		
+		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rightArrowPressed = true;
+		}
+	}
+	
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			leftArrowPressed = false;
+		}
+		
+		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rightArrowPressed = false;
+		}
+	}
+	
+	public void keyTyped(KeyEvent e) {
+		
+	}
   
 	public static void main (String[] args) {
 		KeyGame a = new KeyGame();
 		a.repaint();
-		Player MainCharacter = new Player();
   }
 	
 }

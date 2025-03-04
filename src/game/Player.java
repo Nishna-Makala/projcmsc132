@@ -3,30 +3,45 @@ package game;
 import java.awt.Graphics;
 import java.awt.Image;
 
-//import javax.swing.ImageIcon;
-
 class Player extends Polygon{
+	private static final int stepSize = 20;
     private static Point[] shape;
     private static Point startingPosition;
-    Image image;
+    
 	static {
-		shape = new Point[] {new Point(0,0), new Point(50, 0), 
-				new Point(50, 50), new Point(0, 50)};
-		startingPosition = new Point(145, 120);
+		shape = new Point[] {new Point(0,0), new Point(30, 0), 
+				new Point(30, 30), new Point(0, 30)};
+		startingPosition = new Point(145, 420);
 	}
 	
 	public Player() {
 		super(shape, startingPosition, 0);
-//		String imagePath = "C:/Users/Carrick Southall/git/projcmsc132/src/game/mario.png";
-//		image = new ImageIcon(imagePath).getImage();
 	}
 	
 	void paint (Graphics brush) {
 		shape = super.getPoints();
 		int[] XVals = splitPoints(shape, true);
 		int[] YVals = splitPoints(shape, false);
-		brush.drawPolygon(XVals, YVals, XVals.length);
-//		brush.drawImage(image, 300, 300, null);
+//		brush.drawPolygon(XVals, YVals, XVals.length);
+		brush.fillPolygon(XVals, YVals, XVals.length);
+	}
+	
+	public void move(boolean leftArrowHeld, boolean rightArrowHeld) {
+		if ((leftArrowHeld && rightArrowHeld) || (!leftArrowHeld && !rightArrowHeld)) {
+			return;
+		}
+		if (leftArrowHeld) {
+			if (super.position.getX() <= 24) {
+				return;
+			}
+			super.position.setX(super.position.getX() - stepSize);
+		}
+		else {
+			if (super.position.getX() >= 750) {
+				return;
+			}
+			super.position.setX(super.position.getX() + stepSize);
+		}
 	}
 	
 	private static int[] splitPoints(Point[] PointArr, boolean XVal) {
