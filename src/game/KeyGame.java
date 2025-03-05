@@ -1,4 +1,6 @@
 package game;
+import java.awt.Graphics;
+
 
 /*
 CLASS: YourGameNameoids
@@ -12,16 +14,23 @@ import java.awt.event.*;
 
 class KeyGame extends Game {
 	static int counter = 0;
+	private BreakableBlocks testBlock;
+	private Point[] breakableBlocksPoints = {new Point(0,0), new Point(0,60), new Point(60,60), new Point(60,0)};
 
   public KeyGame() {
     super("KeyGame!!!", 800, 600);
     this.setFocusable(true);
 	this.requestFocus();
+	testBlock = new BreakableBlocks(breakableBlocksPoints);
+	
   }
   
 	public void paint(Graphics brush) {
     	brush.setColor(Color.black);
     	brush.fillRect(0,0,width,height);
+    	
+    	testBlock.paint(brush);
+
     	
     	// sample code for printing message for debugging
     	// counter is incremented and this message printed
