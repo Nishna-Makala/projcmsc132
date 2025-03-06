@@ -14,14 +14,21 @@ import java.awt.event.*;
 
 class KeyGame extends Game {
 	static int counter = 0;
-	private BreakableBlocks testBlock;
-	private Point[] breakableBlocksPoints = {new Point(0,0), new Point(0,60), new Point(60,60), new Point(60,0)};
+	private BreakableBlocks testBlock, testBlock2;
+	private Key key;
+	private Point[] breakableBlocksPoints = {new Point(0,0), new Point(0,30), new Point(30,30), new Point(30,0)};
+	private Point[] keyPoints = {new Point(20, 50), new Point(17, 60), new Point(10, 67), new Point(0, 70), new Point(-10, 67), 
+			new Point(-17, 60), new Point(-20, 50), new Point(-17, 40), new Point(-10, 32), 
+			new Point(0, 30), new Point(10, 32), new Point(17, 40), new Point(20, 50), 
+			new Point(-5, 50), new Point(5, 50), new Point(5, 0), new Point(-5, 0), new Point(-5, 50)};
 
   public KeyGame() {
     super("KeyGame!!!", 800, 600);
     this.setFocusable(true);
 	this.requestFocus();
-	testBlock = new BreakableBlocks(breakableBlocksPoints);
+	testBlock = new BreakableBlocks(breakableBlocksPoints, 50, 500);
+	testBlock2 = new BreakableBlocks(breakableBlocksPoints, 90, 500);
+	key = new Key(keyPoints);
 	
   }
   
@@ -30,6 +37,8 @@ class KeyGame extends Game {
     	brush.fillRect(0,0,width,height);
     	
     	testBlock.paint(brush);
+    	testBlock2.paint(brush);
+    	key.paint(brush);
 
     	
     	// sample code for printing message for debugging

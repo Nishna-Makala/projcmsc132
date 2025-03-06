@@ -10,8 +10,9 @@ public class BreakableBlocks extends Polygon {
 	 * 
 	 * @param shape    An array list of points that make up the block
 	 */
-	public BreakableBlocks(Point[] shape) {
-		super(shape, new Point(50,50) ,0.0);
+	public BreakableBlocks(Point[] shape, int xCoorBlock, int yCoorBlock) {
+		super(shape, new Point(xCoorBlock,yCoorBlock) ,0.0);
+		this.rotate(180);
 	}
 	
 	
@@ -58,6 +59,7 @@ public class BreakableBlocks extends Polygon {
 	 */
 	public void collides(Polygon mainCharacter) {
 		//implementation not yet written
+		//if touches x-coordinate, then bounce back left, touches upper y coordinate bounce up
 	}
 	
 	
