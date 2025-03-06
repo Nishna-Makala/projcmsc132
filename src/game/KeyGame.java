@@ -22,8 +22,9 @@ class KeyGame extends Game implements KeyListener{
 =======
 import java.util.ArrayList;
 
-class KeyGame extends Game {
+class KeyGame extends Game implements KeyListener{
 	static int counter = 0;
+<<<<<<< HEAD
 	private ArrayList <BreakableBlocks> breakableBlockRow = new ArrayList<BreakableBlocks>(); //consists of one row of breakable blocks
 	private Key key; // the key needed to pass level
 	private Point[] breakableBlocksPoints = {new Point(0,0), new Point(0,30), new Point(30,30), new Point(30,0)};
@@ -37,11 +38,16 @@ class KeyGame extends Game {
 	static Player MainCharacter;
 	static boolean leftArrowPressed, rightArrowPressed;
 >>>>>>> 9fd895daac09eef99cc671dc5be2bac9fcad8932
+=======
+	static Player MainCharacter;
+	static boolean leftArrowPressed, rightArrowPressed;
+>>>>>>> 9fd895daac09eef99cc671dc5be2bac9fcad8932
 
   public KeyGame() {
     super("KeyGame!!!", 800, 600);
     this.setFocusable(true);
 	this.requestFocus();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	BreakableBlock testBlock =  new BreakableBlock();
@@ -56,6 +62,10 @@ class KeyGame extends Game {
 	key = new Key(keyPoints); 
 	
 >>>>>>> Nishna
+=======
+	this.addKeyListener(this);
+	MainCharacter = new Player();
+>>>>>>> 9fd895daac09eef99cc671dc5be2bac9fcad8932
 =======
 	this.addKeyListener(this);
 	MainCharacter = new Player();
