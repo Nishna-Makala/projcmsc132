@@ -16,8 +16,9 @@ import java.awt.*;
 import java.awt.event.*;
 <<<<<<< HEAD
 
-class KeyGame extends Game {
+class KeyGame extends Game implements KeyListener{
 	static int counter = 0;
+<<<<<<< HEAD
 =======
 import java.util.ArrayList;
 
@@ -32,11 +33,16 @@ class KeyGame extends Game {
 		 new Point(0, 0), new Point(-25, 0), new Point(-15, 0), new Point(-15, -50), 
 		 new Point(-25, -50), new Point(-25, 0)};
 >>>>>>> Nishna
+=======
+	static Player MainCharacter;
+	static boolean leftArrowPressed, rightArrowPressed;
+>>>>>>> 9fd895daac09eef99cc671dc5be2bac9fcad8932
 
   public KeyGame() {
     super("KeyGame!!!", 800, 600);
     this.setFocusable(true);
 	this.requestFocus();
+<<<<<<< HEAD
 <<<<<<< HEAD
 	BreakableBlock testBlock =  new BreakableBlock();
 =======
@@ -50,6 +56,10 @@ class KeyGame extends Game {
 	key = new Key(keyPoints); 
 	
 >>>>>>> Nishna
+=======
+	this.addKeyListener(this);
+	MainCharacter = new Player();
+>>>>>>> 9fd895daac09eef99cc671dc5be2bac9fcad8932
   }
   
 	public void paint(Graphics brush) {
@@ -73,7 +83,47 @@ class KeyGame extends Game {
     	counter++;
     	brush.setColor(Color.white);
     	brush.drawString("Counter is " + counter,10,10);
+    	brush.setColor(Color.pink);
+    	MainCharacter.move(leftArrowPressed, rightArrowPressed);
+    	MainCharacter.playerState.updateJump(); //update state (is player jumping)
+    	MainCharacter.paint(brush);
   }
+	
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			leftArrowPressed = true;
+            if (MainCharacter != null && !MainCharacter.lookingLeft) {
+                MainCharacter.reflect(); 
+                MainCharacter.lookingLeft = true;
+            }
+        } 
+		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightArrowPressed = true;
+            if (MainCharacter != null && MainCharacter.lookingLeft) {
+                MainCharacter.reflect(); 
+                MainCharacter.lookingLeft = false;
+            }
+        }
+		else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			if (!MainCharacter.playerState.isJumping) {
+				MainCharacter.playerState.startJump(MainCharacter.getPosition().getY());
+			}
+		}
+	}
+	
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			leftArrowPressed = false;
+		}
+		
+		else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rightArrowPressed = false;
+		}
+	}
+	
+	public void keyTyped(KeyEvent e) {
+		
+	}
   
 	public static void main (String[] args) {
 		KeyGame a = new KeyGame();
