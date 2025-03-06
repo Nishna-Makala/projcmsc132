@@ -16,10 +16,11 @@ class KeyGame extends Game {
 	private ArrayList <BreakableBlocks> breakableBlockRow = new ArrayList<BreakableBlocks>(); //consists of one row of breakable blocks
 	private Key key; // the key needed to pass level
 	private Point[] breakableBlocksPoints = {new Point(0,0), new Point(0,30), new Point(30,30), new Point(30,0)};
-	private Point[] keyPoints = {new Point(20, 50), new Point(17, 60), new Point(10, 67), new Point(0, 70), new Point(-10, 67), 
-			new Point(-17, 60), new Point(-20, 50), new Point(-17, 40), new Point(-10, 32), 
-			new Point(0, 30), new Point(10, 32), new Point(17, 40), new Point(20, 50), 
-			new Point(-5, 50), new Point(5, 50), new Point(5, 0), new Point(-5, 0), new Point(-5, 50)};
+	private Point[] keyPoints = {new Point(0, 0), new Point(0, 10), new Point(-10, 20), new Point(-20, 20), 
+		 new Point(-30, 20), new Point(-40, 10), new Point(-40, 0), new Point(-40, -10), 
+		 new Point(-30, -20), new Point(-20, -20), new Point(-10, -20), new Point(0, -10), 
+		 new Point(0, 0), new Point(-25, 0), new Point(-15, 0), new Point(-15, -50), 
+		 new Point(-25, -50), new Point(-25, 0)};
 
   public KeyGame() {
     super("KeyGame!!!", 800, 600);

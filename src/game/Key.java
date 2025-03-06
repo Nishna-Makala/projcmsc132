@@ -5,11 +5,21 @@ import java.awt.Graphics;
 
 public class Key extends Polygon{
 	
+	/**A constructor for the key which the player needs to collect to win
+	 * 
+	 * @param shape   Describes the shape of the key using points
+	 */
 	public Key(Point[] shape) {
-		super(shape, new Point(100,20) ,90);
+		super(shape, new Point(400,200) ,90);
 	}
 	
 	
+	
+	/**
+	 * The method draws a key
+	 * 
+	 * @param brush    An instance of the Graphics class
+	 */
 	public void paint(Graphics brush) {
         brush.setColor(Color.yellow); // Set the fill color
 
