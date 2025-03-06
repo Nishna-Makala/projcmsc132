@@ -2,23 +2,27 @@ package game;
 
 import java.awt.Graphics;
 
+import javax.management.remote.SubjectDelegationPermission;
+
 class Player extends Polygon{
 	private static final int stepSize = 20;
     private static Point[] shape;
     private static Point startingPosition;
     private Point center;
     boolean lookingLeft;
+    PlayerState playerState;
     
 	static {
 		shape = new Point[] {new Point(0,0), new Point(30, 0), 
 				new Point(50, 30), new Point(0, 30)};
-		startingPosition = new Point(145, 420);
+		startingPosition = new Point(145, 470);
 	}
 	
 	public Player() {
 		super(shape, startingPosition, 0);
 		lookingLeft = false;
 		center = findCenter();
+		playerState = new PlayerState();
 	}
 	
 	void paint (Graphics brush) {
@@ -32,10 +36,6 @@ class Player extends Polygon{
 			p.x = 2 * center.x - p.x;
 		}
 		recenterShape();
-	}
-	
-	public void jump() {
-		
 	}
 	
 	public void move(boolean leftArrowHeld, boolean rightArrowHeld) {
@@ -105,6 +105,57 @@ class Player extends Polygon{
 			NewArr[i] = (int) PointArr[i].getY();
 		}
 		return NewArr;
+	}
+	
+	Point getPosition() {
+		return super.position;
+	}
+	
+	private void setPosition(double x, double y) {
+		super.position.setX(x);
+		super.position.setY(y);
+	}
+	
+	public class PlayerState {
+		boolean isJumping;
+		double yMax;
+		double yInit;
+		static int jumpHeight = 200;
+		static int jumpSpeed = 30;
+		
+		public void startJump(double yPosition) {
+			if (!isJumping && yPosition > yMax) { //currently allowing double jump because of this logic) {
+				yInit = yPosition;
+				yMax = Math.max(yPosition - jumpHeight, 30);
+				isJumping = true;
+			}
+		}
+		
+		public PlayerState() {
+			super();
+		}
+		
+		public void updateJump() {
+			if (isJumping) {
+				double yPosition = getPosition().getY();
+				if (KeyGame.counter % 1 == 0) {
+					if (yPosition > yMax) {
+						setPosition(getPosition().getX(), yPosition -= jumpSpeed);
+					}
+					else {
+						isJumping = false;
+					}
+				}
+			}
+			else {
+				double yPosition = getPosition().getY();
+				if (KeyGame.counter % 3 == 0) {
+					if (yPosition < yInit) {
+						setPosition(getPosition().getX(), yPosition + jumpSpeed);
+					}
+				}
+			}
+		}
 	}
 
 }

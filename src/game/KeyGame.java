@@ -35,6 +35,7 @@ class KeyGame extends Game implements KeyListener{
     	brush.drawString("Counter is " + counter,10,10);
     	brush.setColor(Color.pink);
     	MainCharacter.move(leftArrowPressed, rightArrowPressed);
+    	MainCharacter.playerState.updateJump(); //update state (is player jumping)
     	MainCharacter.paint(brush);
   }
 	
@@ -54,7 +55,9 @@ class KeyGame extends Game implements KeyListener{
             }
         }
 		else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			MainCharacter.jump();
+			if (!MainCharacter.playerState.isJumping) {
+				MainCharacter.playerState.startJump(MainCharacter.getPosition().getY());
+			}
 		}
 	}
 	
