@@ -70,7 +70,16 @@ class KeyGame extends Game implements KeyListener{
     		breakableBlockRow.get(index).paint(brush);
     	}
     	
-    	key.paint(brush);
+    	if (!MainCharacter.hasKey) {
+//    		System.out.println(MainCharacter.getPoints().toString());
+    		for (Point p : MainCharacter.getPoints()) {
+    			if (key.contains(p)) {
+    				MainCharacter.hasKey = true;
+    				break;
+    			}
+    		}
+        	key.paint(brush);
+    	}
   }
 	
 	public void keyPressed(KeyEvent e) {

@@ -31,7 +31,7 @@ public class Key extends Polygon{
             xPoints[i] = (int) (this.getPoints()[i].getX());
             yPoints[i] = (int) (this.getPoints()[i].getY());
         }
-
+        
         // Draw filled polygon
         brush.fillPolygon(xPoints, yPoints, getPoints().length);
 	}
