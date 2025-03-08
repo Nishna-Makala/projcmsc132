@@ -2,14 +2,12 @@ package game;
 
 import java.awt.Graphics;
 
-import javax.management.remote.SubjectDelegationPermission;
-
 class Player extends Polygon{
-	private static final int stepSize = 20;
+	private static final int stepSize = 10;
     private static Point[] shape;
     private static Point startingPosition;
     private Point center;
-    boolean lookingLeft;
+    boolean lookingLeft, hasKey;
     PlayerState playerState;
     
 	static {
@@ -138,7 +136,7 @@ class Player extends Polygon{
 		public void updateJump() {
 			if (isJumping) {
 				double yPosition = getPosition().getY();
-				if (KeyGame.counter % 1 == 0) {
+				if (KeyGame.counter % 2 == 0) {
 					if (yPosition > yMax) {
 						setPosition(getPosition().getX(), yPosition -= jumpSpeed);
 					}
@@ -149,7 +147,7 @@ class Player extends Polygon{
 			}
 			else {
 				double yPosition = getPosition().getY();
-				if (KeyGame.counter % 3 == 0) {
+				if (KeyGame.counter % 3 == 0) { //mod 3 for debugging purposes/easier to watch movement
 					if (yPosition < yInit) {
 						setPosition(getPosition().getX(), yPosition + jumpSpeed);
 					}
