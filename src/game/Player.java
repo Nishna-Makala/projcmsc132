@@ -2,14 +2,12 @@ package game;
 
 import java.awt.Graphics;
 
-import javax.management.remote.SubjectDelegationPermission;
-
 class Player extends Polygon{
-	private static final int stepSize = 20;
+	private static final int stepSize = 10;
     private static Point[] shape;
     private static Point startingPosition;
     private Point center;
-    boolean lookingLeft;
+    boolean lookingLeft, hasKey;
     PlayerState playerState;
     //Nishna added for platform collisions
     private boolean isJumping = false; 
@@ -97,7 +95,7 @@ class Player extends Polygon{
         center = findCenter();
     }
 	
-	private static int[] splitPoints(Point[] PointArr, boolean XVal) {
+	public static int[] splitPoints(Point[] PointArr, boolean XVal) {
 		int[] NewArr = new int[PointArr.length];
 		if (XVal) {
 			for (int i = 0; i < PointArr.length; i++) {
@@ -128,7 +126,7 @@ class Player extends Polygon{
 		public void startJump(double yPosition) {
 			if (!isJumping && yPosition > yMax) { //currently allowing double jump because of this logic) {
 				yInit = yPosition;
-				yMax = Math.max(yPosition - jumpHeight, 30);
+				yMax = Math.max(yPosition - jumpHeight, 30); //either full height or slightly below top of window, whichever is more
 				isJumping = true;
 			}
 		}
@@ -138,6 +136,7 @@ class Player extends Polygon{
 		}
 		
 		public void updateJump() {
+
 			if (!executingLandOnPlatform) { //Nishna added this
 				if (isJumping) {
 					double yPosition = getPosition().getY();
@@ -152,12 +151,13 @@ class Player extends Polygon{
 				else {
 					double yPosition = getPosition().getY();
 					if (KeyGame.counter % 3 == 0) {
-						if (yPosition < yInit) {
+						if (yPosition < yInit) { //mod 3 for debugging purposes/easier to watch movement
 							setPosition(getPosition().getX(), yPosition + jumpSpeed);
 						}
 					}
 				}
 			}
+
 			
 		}
 	}
