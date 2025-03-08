@@ -14,7 +14,8 @@ import java.util.ArrayList;
 class KeyGame extends Game implements KeyListener{
 	static int counter = 0;
 	static Player MainCharacter;
-	static boolean leftArrowPressed, rightArrowPressed;
+	static boolean leftArrowPressed, rightArrowPressed, gameOver;
+	private Gate gate;
 	
 	
 	private ArrayList <BreakableBlocks> breakableBlockRow = new ArrayList<BreakableBlocks>(); //consists of one row of breakable blocks
@@ -46,40 +47,63 @@ class KeyGame extends Game implements KeyListener{
 	}
 
 	key = new Key(keyPoints); 
+	gate = new Gate();
   }
   
 	public void paint(Graphics brush) {
-    	brush.setColor(Color.black);
-    	brush.fillRect(0,0,width,height);
-    	
-    	// sample code for printing message for debugging
-    	// counter is incremented and this message printed
-    	// each time the canvas is repainted
-    	counter++;
-    	brush.setColor(Color.white);
-    	brush.drawString("Counter is " + counter,10,10);
-    	brush.setColor(Color.pink);
-    	MainCharacter.move(leftArrowPressed, rightArrowPressed);
-    	MainCharacter.playerState.updateJump(); //update state (is player jumping)
-    	MainCharacter.paint(brush);
-    	
-    	
-    	
-    	
-    	for (int index = 0; index < breakableBlockRow.size(); index++) {
-    		breakableBlockRow.get(index).paint(brush);
-    	}
-    	
-    	if (!MainCharacter.hasKey) {
-//    		System.out.println(MainCharacter.getPoints().toString());
-    		for (Point p : MainCharacter.getPoints()) {
-    			if (key.contains(p)) {
-    				MainCharacter.hasKey = true;
-    				break;
-    			}
-    		}
-        	key.paint(brush);
-    	}
+		if (!gameOver) { //draw regular screen (not win screen)
+	    	brush.setColor(Color.black);
+	    	brush.fillRect(0,0,width,height);
+	    	
+	    	// sample code for printing message for debugging
+	    	// counter is incremented and this message printed
+	    	// each time the canvas is repainted
+	    	counter++;
+	    	brush.setColor(Color.white);
+	    	brush.drawString("Counter is " + counter,10,10);
+	    	brush.setColor(Color.pink);
+	    	MainCharacter.move(leftArrowPressed, rightArrowPressed);
+	    	MainCharacter.playerState.updateJump(); //update state (is player jumping)
+	    	MainCharacter.paint(brush);
+	    	gate.paint(brush);
+	    	
+	    	
+	    	
+	    	
+	    	for (int index = 0; index < breakableBlockRow.size(); index++) {
+	    		breakableBlockRow.get(index).paint(brush);
+	    	}
+	    	
+	    	if (!MainCharacter.hasKey) { //draw key if not picked up yet
+//	    		System.out.println(MainCharacter.getPoints().toString());
+	    		for (Point p : MainCharacter.getPoints()) {
+	    			if (key.contains(p)) {
+	    				MainCharacter.hasKey = true;
+	    				break;
+	    			}
+	    		}
+	        	key.paint(brush);
+	    	}
+	    	
+	    	else { //if player has key, check if they walk through door (i.e. center (position) is inside gate)
+	    		//for (Point p : MainCharacter.getPoints()) {
+	    			if (gate.gateShape.contains(MainCharacter.position)) {
+	    				gameOver = true;
+//	    				break;
+	    			}
+	    		//}
+	    	}
+		}
+		
+		else {
+            new Object() { //win screen/fulfills anon class req
+                {
+                	brush.setColor(Color.MAGENTA);
+                	brush.fillRect(0, 0, width, height);
+//                	PoC of win screen - will make nice later (flashing b/w block text ?)
+		}
+            };
+		}
   }
 	
 	public void keyPressed(KeyEvent e) {
