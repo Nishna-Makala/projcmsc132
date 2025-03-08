@@ -11,8 +11,8 @@ class Player extends Polygon{
     private Point center;
     boolean lookingLeft;
     PlayerState playerState;
-    //Nishna added
-    private boolean isJumping = false; //added for collisions
+    //Nishna added for platform collisions
+    private boolean isJumping = false; 
     private boolean executingLandOnPlatform;
     private double yInit = 470;
     
@@ -121,9 +121,7 @@ class Player extends Polygon{
 	}
 	
 	public class PlayerState {
-		//boolean isJumping;  will remove
 		double yMax;
-		//double yInit;       will remove
 		static int jumpHeight = 200;
 		static int jumpSpeed = 30;
 		
@@ -167,10 +165,15 @@ class Player extends Polygon{
 	
 	
 	
-/**
- * Nishna
- */
-	
+//Nishna added these methods for collisions
+
+	/**
+	 * Checks if the points on Breakable Block object and Player
+	 * are at least 30 pixels within of each other
+	 * 
+	 * @param block
+	 * @return true if collides, false if not
+	 */
 	private boolean isColliding(BreakableBlocks block) {
 		for (int i = 0; i < block.getPoints().length; i++) {
 			for (int j = 0; j < block.getPoints().length; j++) {
@@ -179,9 +182,15 @@ class Player extends Polygon{
 			}
 		}
 	}
+		
 	return false;
+	
 	}
 	
+	/** Continuously moves player down to simulate gravity
+	 * 
+	 * @param block
+	 */
 	public void gravity(BreakableBlocks block) {
 		if(!isJumping && !executingLandOnPlatform && !(isColliding(block))) {
 			if (KeyGame.counter % 3 == 0) {
@@ -190,14 +199,24 @@ class Player extends Polygon{
 		}
 	}
 	
+	/** getter method for isJumping
+	 * 
+	 * @return  isJumping
+	 */
 	public boolean getIsJumping() {
 		return isJumping;
 	}
 	
+	
+	/** updates yInit variable and returns it
+	 * 
+	 * @return yInit variable
+	 */
 	public double updateYInit() {
 		yInit = getPosition().getY();
 		return yInit;
 	}
+	
 	/**
 	 * Created in Player class in order for BreakableBlock class collides
 	 * method to access mainCharacter object.
