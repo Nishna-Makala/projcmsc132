@@ -91,7 +91,7 @@ class Player extends Polygon{
         center = findCenter();
     }
 	
-	private static int[] splitPoints(Point[] PointArr, boolean XVal) {
+	public static int[] splitPoints(Point[] PointArr, boolean XVal) {
 		int[] NewArr = new int[PointArr.length];
 		if (XVal) {
 			for (int i = 0; i < PointArr.length; i++) {
@@ -124,7 +124,7 @@ class Player extends Polygon{
 		public void startJump(double yPosition) {
 			if (!isJumping && yPosition > yMax) { //currently allowing double jump because of this logic) {
 				yInit = yPosition;
-				yMax = Math.max(yPosition - jumpHeight, 30);
+				yMax = Math.max(yPosition - jumpHeight, 30); //either full height or slightly below top of window, whichever is more
 				isJumping = true;
 			}
 		}

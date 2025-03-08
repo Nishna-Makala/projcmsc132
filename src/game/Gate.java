@@ -16,15 +16,10 @@ public class Gate {
         brush.setColor(Color.GRAY);
 
         Point[] points = gateShape.getPoints();
-        int[] xPoints = new int[points.length];
-        int[] yPoints = new int[points.length];
+        int[] XVals = Player.splitPoints(points, true);
+        int[] YVals = Player.splitPoints(points, false);
 
-        for (int i = 0; i < points.length; i++) {
-            xPoints[i] = (int) points[i].getX();
-            yPoints[i] = (int) points[i].getY();
-        }
-
-        brush.fillPolygon(xPoints, yPoints, points.length);
+        brush.fillPolygon(XVals, YVals, points.length);
 	}
 
 }
