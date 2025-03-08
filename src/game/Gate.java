@@ -16,7 +16,7 @@ public class Gate {
         brush.setColor(Color.GRAY);
 
         Point[] points = gateShape.getPoints();
-        int[] XVals = Player.splitPoints(points, true);
+        int[] XVals = Player.splitPoints(points, true); //could prob make utilities class for this method but wtv
         int[] YVals = Player.splitPoints(points, false);
 
         brush.fillPolygon(XVals, YVals, points.length);

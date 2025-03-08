@@ -100,6 +100,7 @@ class KeyGame extends Game implements KeyListener{
                 {
                 	brush.setColor(Color.MAGENTA);
                 	brush.fillRect(0, 0, width, height);
+//                	PoC of win screen - will make nice later (flashing b/w block text ?)
 		}
             };
 		}
