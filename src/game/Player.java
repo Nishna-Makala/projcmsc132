@@ -11,6 +11,10 @@ class Player extends Polygon{
     private Point center;
     boolean lookingLeft;
     PlayerState playerState;
+    //Nishna added
+    private boolean isJumping = false; //added for collisions
+    private boolean executingLandOnPlatform;
+    private double yInit = 470;
     
 	static {
 		shape = new Point[] {new Point(0,0), new Point(30, 0), 
@@ -117,9 +121,9 @@ class Player extends Polygon{
 	}
 	
 	public class PlayerState {
-		boolean isJumping;
+		//boolean isJumping;  will remove
 		double yMax;
-		double yInit;
+		//double yInit;       will remove
 		static int jumpHeight = 200;
 		static int jumpSpeed = 30;
 		
@@ -136,26 +140,105 @@ class Player extends Polygon{
 		}
 		
 		public void updateJump() {
-			if (isJumping) {
-				double yPosition = getPosition().getY();
-				if (KeyGame.counter % 1 == 0) {
-					if (yPosition > yMax) {
-						setPosition(getPosition().getX(), yPosition -= jumpSpeed);
+			if (!executingLandOnPlatform) { //Nishna added this
+				if (isJumping) {
+					double yPosition = getPosition().getY();
+					if (KeyGame.counter % 1 == 0) {
+						if (yPosition > yMax ) { 
+							setPosition(getPosition().getX(), yPosition -= jumpSpeed);
+						}
+						else {
+							isJumping = false;						}
 					}
-					else {
-						isJumping = false;
+				}
+				else {
+					double yPosition = getPosition().getY();
+					if (KeyGame.counter % 3 == 0) {
+						if (yPosition < yInit) {
+							setPosition(getPosition().getX(), yPosition + jumpSpeed);
+						}
 					}
 				}
 			}
-			else {
-				double yPosition = getPosition().getY();
-				if (KeyGame.counter % 3 == 0) {
-					if (yPosition < yInit) {
-						setPosition(getPosition().getX(), yPosition + jumpSpeed);
-					}
-				}
+			
+		}
+	}
+	
+	
+	
+	
+/**
+ * Nishna
+ */
+	
+	private boolean isColliding(BreakableBlocks block) {
+		for (int i = 0; i < block.getPoints().length; i++) {
+			for (int j = 0; j < block.getPoints().length; j++) {
+				if (Math.abs(block.getPoints()[i].getY() - this.getPoints()[j].getY()) <= 30){
+					return true;
 			}
 		}
 	}
+	return false;
+	}
+	
+	public void gravity(BreakableBlocks block) {
+		if(!isJumping && !executingLandOnPlatform && !(isColliding(block))) {
+			if (KeyGame.counter % 3 == 0) {
+					setPosition(getPosition().getX(), updateYInit() + 0.3);
+			}
+		}
+	}
+	
+	public boolean getIsJumping() {
+		return isJumping;
+	}
+	
+	public double updateYInit() {
+		yInit = getPosition().getY();
+		return yInit;
+	}
+	/**
+	 * Created in Player class in order for BreakableBlock class collides
+	 * method to access mainCharacter object.
 
+	 * @param direction   direction is specified in BreakableBlocks class,
+	 *  where this method is called. This can be "up" or "down"
+	 */
+	public boolean landOnPlatform(String direction, double yPosition){
+		
+		executingLandOnPlatform = false; 
+		
+		switch(direction) {
+		
+		default:
+			return false;
+		
+		case "DOWN":
+			executingLandOnPlatform = true; 
+			isJumping = false;
+			setPosition(getPosition().getX(), this.getPoints()[0].getY()+22);
+			updateYInit();
+			break;
+		
+		case "UP":
+			executingLandOnPlatform = true; 
+			isJumping = false;
+			setPosition(getPosition().getX(), this.getPoints()[1].getY() - 2);
+			updateYInit();
+			break;
+		
+		}
+		
+		executingLandOnPlatform = false; 
+		return true;
+		
+	}
+
+		
+
+		
 }
+	
+
+

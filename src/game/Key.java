@@ -5,11 +5,21 @@ import java.awt.Graphics;
 
 public class Key extends Polygon{
 	
+	private static Point[] shape;
+	
+	static {
+		shape = new Point[] {new Point(0, 0), new Point(0, 10), new Point(-10, 20), new Point(-20, 20), 
+				 new Point(-30, 20), new Point(-40, 10), new Point(-40, 0), new Point(-40, -10), 
+				 new Point(-30, -20), new Point(-20, -20), new Point(-10, -20), new Point(0, -10), 
+				 new Point(0, 0), new Point(-25, 0), new Point(-15, 0), new Point(-15, -50), 
+				 new Point(-25, -50), new Point(-25, 0)};
+	}
+	
 	/**A constructor for the key which the player needs to collect to win
 	 * 
 	 * @param shape   Describes the shape of the key using points
 	 */
-	public Key(Point[] shape) {
+	public Key() {
 		super(shape, new Point(400,200) ,90);
 	}
 	
