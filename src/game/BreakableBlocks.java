@@ -2,18 +2,19 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
 import game.Player.PlayerState;
 
+
+/** 
+ * Represents a single block object on a screen that the player 
+ * uses as a platform to jump
+ * 
+ * @author Nishna Makala
+ * @version 21.0.6 LTS (2025-01-21) - OpenJDK Runtime Environment Temurin-21.0.6+7
+ */
 public class BreakableBlocks extends Polygon {
 	
-	/** Represents a single block on a screen.
-	 * 
-	 * @author Nishna Makala
-	 */
-	
-	
-	private final static Point[] shape;
+	private final static Point[] shape; //array of points that make up shape of this block object
 	private boolean isPowerUp; //true if BreakableBlock object is a PowerUp, false if not
 	
 	static {
@@ -23,10 +24,13 @@ public class BreakableBlocks extends Polygon {
 
 	
 	
-	/**A constructor for regular blocks in the game that serve as a
-	 * mid-air platform for the main character
-	 * 
-	 * @param shape    An array list of points that make up the block
+	/** 
+	 * A constructor for regular blocks in the game that serve as a
+	* mid-air platform for the main character
+	* 
+	 * @param xCoorBlock   represents the x-coordinate where this block will be placed
+	 * @param yCoorBlock   represents the y-coordinate where this block will be placed
+	 * @param isPowerUp    true if this block is a power-up, false if not
 	 */
 	public BreakableBlocks(int xCoorBlock, int yCoorBlock, boolean isPowerUp) {
 		super(shape, new Point(xCoorBlock,yCoorBlock) ,0.0);
@@ -35,9 +39,11 @@ public class BreakableBlocks extends Polygon {
 	}
 	
 	
-	/** Changes BreakableBlock object to a not-power-block by setting
-	 * is PowerUp to "false."
-	 * 
+	
+	
+	/** 
+	 * Changes this block to a non-power-block by setting
+	 * isPowerUp to "false."
 	 */
 	public void changeIsPowerUp() {
 		isPowerUp = false;
@@ -45,7 +51,10 @@ public class BreakableBlocks extends Polygon {
 
 	
 	
-	/** The method draws a filled gray block representing BreakableBlock object.
+	/** 
+	 * The method draws a filled block representing this BreakableBlock object.
+     * The block is drawn in either red (if it is a power-up)
+     *  or blue (if it is a regular block).
 	 *  
 	 * @param brush   An instance of the Graphics class
 	 */
@@ -72,7 +81,8 @@ public class BreakableBlocks extends Polygon {
 	
 	
 	
-	/** If main character is touching a platform, then all points in 
+	/** 
+	 * If main character is touching a platform, then all points in 
 	 * main character should move either up or down until no longer 
 	 * colliding with blocks. 
 	 * 
@@ -104,9 +114,11 @@ public class BreakableBlocks extends Polygon {
 
 
 	
-	/** Checks if block object is colliding with Player object
+	
+	/** 
+	 * Checks if this block object is currently colliding with Player object.
 	 * 
-	 * @param mainCharacter
+	 * @param mainCharacter An instance of the Player class representing the main character.
 	 * @return true if colliding, false if not
 	 */
 	public boolean isColliding(Polygon mainCharacter) {
@@ -123,26 +135,44 @@ public class BreakableBlocks extends Polygon {
 	}
 	
 	
+	
+    /**
+     * Inner class that handles the power-up behavior for this BreakableBlock object.
+     * The power-up is activated when the player comes into contact with the block.
+     */
     public class Power implements POWERUPS {
         private boolean isActive;
         
+        /** 
+         * Checks if the power-up block is at least 10 pixels within the player.
+         * If so, the power-up is activated for the player.
+         * 
+         * @param mainCharacter   An instance of the Player class representing the main character.
+         * @return true if powerup was activated, false if not
+         */
     	public boolean isActivated(Player mainCharacter) {
+    		
     		for (int i = 0; i < 2; i++) {
     			for (int j = 0; j < 4; j++) {
+    				
     				if (Math.abs(mainCharacter.getPoints()[i].getY() - getPoints()[j].getY()) <= 10
     						&& Math.abs(mainCharacter.getPoints()[i].getX() - getPoints()[j].getX()) <= 10){
     					isActive = true;
     	    			return true;	
+    	    			
     	    		}
+    				
     			}
     		}
     			
         	for (int i = 3; i < 4; i++) {
         		for (int j = 0; j < 4; j++) {
+        			
         			if (Math.abs(mainCharacter.getPoints()[i].getY() - getPoints()[j].getY()) <= 10
         					&& Math.abs(mainCharacter.getPoints()[i].getX() - getPoints()[j].getX()) <= 10){
         				isActive = true;
         	    		return true;	
+        	    		
         	    	}
         		}
     		}
@@ -151,7 +181,11 @@ public class BreakableBlocks extends Polygon {
     	}
     	
     	
-       
+       /** 
+        * Adjusts jumpHeight and jumpSpeed of the player if power-up is active
+        * 
+        * @param mainCharacter  An instance of the Player class representing the main character.
+        */
         public void activatePowerUp(Player mainCharacter) {
         	if (isActive) {
         		changeIsPowerUp();
@@ -160,7 +194,14 @@ public class BreakableBlocks extends Polygon {
         	}
         }
 
-		
+        
+        
+		/** 
+		 * Checks if the power-up is currently active.
+		 * 
+		 * @param mainCharacter  An instance of the Player class representing the main character.
+		 * @return true if power-up is currently active, false if not
+		 */
 		public boolean isPowerUpActive(Player mainCharacter) {
 			return isActive;
 		}

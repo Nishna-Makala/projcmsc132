@@ -3,12 +3,20 @@ package game;
 import java.awt.Color;
 import java.awt.Graphics;
 
+/** 
+ * Represents the key that the player needs to collect in order to 
+ * open the gate and win the game. 
+ * 
+ * @author Nishna Makala
+ * @version 21.0.6 LTS (2025-01-21) - OpenJDK Runtime Environment Temurin-21.0.6+7
+ */
 public class Key extends Polygon{
 	
 
-	private static Point[] shape;
+	private static Point[] shape; //array of points that compose shape of this key object
 	
 	static {
+		
 		shape = new Point[] {new Point(0, 0), new Point(0, 10), new Point(-10, 20), new Point(-20, 20), 
 				 new Point(-30, 20), new Point(-40, 10), new Point(-40, 0), new Point(-40, -10), 
 				 new Point(-30, -20), new Point(-20, -20), new Point(-10, -20), new Point(0, -10), 
@@ -17,18 +25,19 @@ public class Key extends Polygon{
 	}
 	
 
-	/**A constructor for the key which the player needs to collect to win
-	 * 
-	 * @param shape   Describes the shape of the key using points
+	
+	/**
+	 * Constructs new key object. This key is 
+	 * positioned at coordinates (660, 20) and has an initial rotation of 90 degrees.
 	 */
 	public Key() {
-		super(shape, new Point(660,20) ,90);
+		super(shape, new Point(660,20), 90);
 	}
 	
 	
 	
 	/**
-	 * The method draws a key
+	 * The method draws a yellow key on screen using Graphics object
 	 * 
 	 * @param brush    An instance of the Graphics class
 	 */
