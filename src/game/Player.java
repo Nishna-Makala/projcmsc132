@@ -9,7 +9,6 @@ class Player extends Polygon{
     private Point center;
     boolean lookingLeft, hasKey;
     PlayerState playerState;
-    //Nishna added for platform collisions
     private boolean isJumping = false; 
     private boolean executingLandOnPlatform;
     private double yInit = 470;
@@ -137,7 +136,8 @@ class Player extends Polygon{
 		
 		public void updateJump() {
 
-			if (!executingLandOnPlatform) { //Nishna added this
+			if (!executingLandOnPlatform) { 
+
 				if (isJumping) {
 					double yPosition = getPosition().getY();
 					if (KeyGame.counter % 1 == 0) {
@@ -165,7 +165,7 @@ class Player extends Polygon{
 	
 	
 	
-//Nishna added these methods for collisions
+
 
 	/**
 	 * Checks if the points on Breakable Block object and Player
@@ -194,7 +194,7 @@ class Player extends Polygon{
 	public void gravity(BreakableBlocks block) {
 		if(!isJumping && !executingLandOnPlatform && !(isColliding(block))) {
 			if (KeyGame.counter % 3 == 0) {
-					setPosition(getPosition().getX(), updateYInit() + 0.3);
+					setPosition(getPosition().getX(), updateYInit() + 0.7);
 			}
 		}
 	}
