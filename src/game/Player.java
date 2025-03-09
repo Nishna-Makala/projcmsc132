@@ -7,11 +7,8 @@ class Player extends Polygon{
     private static Point[] shape;
     private static Point startingPosition;
     private Point center;
-    boolean lookingLeft, hasKey;
+    boolean lookingLeft, hasKey, executingLandOnPlatform, isJumping;
     PlayerState playerState;
-    //Nishna added for platform collisions
-    private boolean isJumping = false; 
-    private boolean executingLandOnPlatform;
     private double yInit = 470;
     
 	static {
@@ -33,6 +30,7 @@ class Player extends Polygon{
         int[] YVals = splitPoints(transformedShape, false);
         brush.fillPolygon(XVals, YVals, XVals.length);
 	}
+	
 	public void reflect() {
 		for (Point p : shape) {
 			p.x = 2 * center.x - p.x;
@@ -120,7 +118,7 @@ class Player extends Polygon{
 	
 	public class PlayerState {
 		double yMax;
-		static int jumpHeight = 200;
+		static int jumpHeight = 120;
 		static int jumpSpeed = 30;
 		
 		public void startJump(double yPosition) {
@@ -137,7 +135,7 @@ class Player extends Polygon{
 		
 		public void updateJump() {
 
-			if (!executingLandOnPlatform) { //Nishna added this
+			if (!executingLandOnPlatform) { 
 				if (isJumping) {
 					double yPosition = getPosition().getY();
 					if (KeyGame.counter % 1 == 0) {
@@ -165,7 +163,7 @@ class Player extends Polygon{
 	
 	
 	
-//Nishna added these methods for collisions
+
 
 	/**
 	 * Checks if the points on Breakable Block object and Player

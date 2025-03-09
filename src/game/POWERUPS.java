@@ -1,15 +1,13 @@
 package game;
 
-public enum POWERUPS {
-	SPEED(1.25), JUMP_BOOST(1.75);
+public interface POWERUPS {
 	
-	private double modifier;
+	void activatePowerUp(Player mainCharacter);
+
+	boolean isPowerUpActive(Player mainCharacter);
 	
-	private POWERUPS(double modifier) {
-		this.modifier = modifier;
-	}
+	boolean isActivated(Player mainCharacter);
 	
-	public double getModifier() {
-		return this.modifier;
-	}
+	
+	
 }

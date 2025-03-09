@@ -1,5 +1,8 @@
 package game;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /*
 CLASS: YourGameNameoids
 DESCRIPTION: Extending Game, YourGameName is all in the paint method.
@@ -7,9 +10,11 @@ NOTE: This class is the metaphorical "main method" of your program,
       it is your control center.
 
 */
-import java.awt.*;
+
 import java.awt.event.*;
 import java.util.ArrayList;
+
+import game.BreakableBlocks.Power;
 
 class KeyGame extends Game implements KeyListener{
 	static int counter = 0;
@@ -18,7 +23,7 @@ class KeyGame extends Game implements KeyListener{
 	private Key key; // the key needed to pass level
 	static boolean leftArrowPressed, rightArrowPressed, gameOver;
 	private Gate gate;
-	
+	private Power testPower;
 
 	
 
@@ -33,12 +38,28 @@ class KeyGame extends Game implements KeyListener{
 	this.addKeyListener(this);
 	MainCharacter = new Player();
 	
-	for (int i = 1; i <= 4; i++) { //draws blocks in a single row 40 spaces apart
-		breakableBlockRow.add(new BreakableBlocks(20+(40*i), 500));
-		breakableBlockRow.add(new BreakableBlocks(100+(40*i), 300));
-		breakableBlockRow.add(new BreakableBlocks(300+(40*i), 100));
+	
+	//Adding blocks
+	for (int i = 0; i <= 20; i++) {
+		breakableBlockRow.add(new BreakableBlocks((40*i), 500, false));
 	}
+	for (int i = 1; i <= 4; i++) { //draws blocks in a single row 40 spaces apart
+		breakableBlockRow.add(new BreakableBlocks(350+(40*i), 400, false));
+		breakableBlockRow.add(new BreakableBlocks(100+(40*i), 300, false));
+		breakableBlockRow.add(new BreakableBlocks(300+(40*i), 200, false));
+		breakableBlockRow.add(new BreakableBlocks(500+(40*i), 80, false));
+	}
+	
+	for (int i = 1; i <= 3; i++) { //draws blocks in a single row 40 spaces apart
+		breakableBlockRow.add(new BreakableBlocks(500+(40*i), 300, false));
+	}
+	breakableBlockRow.add(new BreakableBlocks(500+(40*4), 300, true));
+	testPower = breakableBlockRow.get(breakableBlockRow.size() - 1).new Power();
+	
 
+
+	
+	
 	key = new Key(); 
 	gate = new Gate();
 	
@@ -56,23 +77,31 @@ class KeyGame extends Game implements KeyListener{
 	    	counter++;
 	    	brush.setColor(Color.white);
 	    	brush.drawString("Counter is " + counter,10,10);
-	    	brush.setColor(Color.pink);
+	    	if(testPower.isPowerUpActive(MainCharacter)) {
+	    		brush.setColor(Color.RED);
+	    	}
+	    	else {
+	    		brush.setColor(Color.pink);
+	    	}
 	    	MainCharacter.move(leftArrowPressed, rightArrowPressed);
 	    	MainCharacter.playerState.updateJump(); //update state (is player jumping)
 	    	MainCharacter.paint(brush);
 	    	gate.paint(brush);
 	    	
+	    	testPower.isActivated(MainCharacter);
+	    	testPower.activatePowerUp(MainCharacter);
 	    	
 	    	
 	    	
 	    	
-	    	for (int index = 0; index < breakableBlockRow.size(); index++) {
-	    		breakableBlockRow.get(index).paint(brush);
-	    		breakableBlockRow.get(index).collides(MainCharacter);
-	    	}
-	    	for (int i = 0; i < breakableBlockRow.size(); i++) {
-	    		MainCharacter.gravity(breakableBlockRow.get(i)); //added
-	    	}
+	    	
+	    	breakableBlockRow.forEach(block -> { //Lambda expression requirement
+	    		block.paint(brush);
+	    		block.collides(MainCharacter);
+	    		MainCharacter.gravity(block);
+	    	});
+	    	
+	    	
 	    	
 	    	if (!MainCharacter.hasKey) { //draw key if not picked up yet
 //	    		System.out.println(MainCharacter.getPoints().toString());
