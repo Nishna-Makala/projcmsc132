@@ -22,7 +22,7 @@ public class Key extends Polygon{
 	 * @param shape   Describes the shape of the key using points
 	 */
 	public Key() {
-		super(shape, new Point(400,200) ,90);
+		super(shape, new Point(660,20) ,90);
 	}
 	
 	
