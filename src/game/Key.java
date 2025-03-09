@@ -5,6 +5,7 @@ import java.awt.Graphics;
 
 public class Key extends Polygon{
 	
+
 	private static Point[] shape;
 	
 	static {
@@ -15,6 +16,7 @@ public class Key extends Polygon{
 				 new Point(-25, -50), new Point(-25, 0)};
 	}
 	
+
 	/**A constructor for the key which the player needs to collect to win
 	 * 
 	 * @param shape   Describes the shape of the key using points
@@ -46,4 +48,6 @@ public class Key extends Polygon{
         brush.fillPolygon(xPoints, yPoints, getPoints().length);
 	}
 	
+
 }
+

@@ -11,6 +11,7 @@ public class BreakableBlocks extends Polygon {
 		shape = new Point[] {new Point(0,0), new Point(0,30), new Point(30,30), new Point(30,0)};
 	}
 	
+
 	/**A constructor for regular blocks in the game that serve as a
 	 * mid-air platform for the main character
 	 * 
@@ -53,39 +54,28 @@ public class BreakableBlocks extends Polygon {
 	 * main character should move either up or down until no longer 
 	 * colliding with blocks. 
 	 * 
-	 * POSSIBLE PROBLEMS TO ADDRESS PRIOR TO IMPLEMENTATION:
-	 * How to determine which direction to move in so that the main
-	 * character "bounces" off the blocks? 
-	 * 
+
 	 * 
 	 * @param mainCharacter   An instance of main character class controlled by user
 	 */
 	public void collides(Player mainCharacter) {
-
-			if (isColliding(mainCharacter)) {
-				if (Math.abs(mainCharacter.getPoints()[0].getY() - this.getPoints()[0].getY()) <= 30) {
-					while (isColliding(mainCharacter)) {
-						(mainCharacter).landOnPlatform("DOWN", mainCharacter.getPoints()[2].getY());
-
+		if (isColliding(mainCharacter)) {
+			if (Math.abs(mainCharacter.getPoints()[0].getY() - this.getPoints()[0].getY()) <= 30) {
+				while (isColliding(mainCharacter)) {
+					(mainCharacter).landOnPlatform("DOWN", mainCharacter.getPoints()[2].getY());
 					}	
-				}
-				else if (Math.abs(mainCharacter.getPoints()[3].getY() - this.getPoints()[0].getY()) <= 30) {
-					while (isColliding(mainCharacter)) {
-						(mainCharacter).landOnPlatform("UP", mainCharacter.getPoints()[1].getY());
-
-					}	
-				}
-
-				
 			}
+			else if (Math.abs(mainCharacter.getPoints()[3].getY() - this.getPoints()[0].getY()) <= 30) {
+				while (isColliding(mainCharacter)) {
+					(mainCharacter).landOnPlatform("UP", mainCharacter.getPoints()[1].getY());
+				}	
+			}
+	
+		}
 		
-
-		//implementation not yet written
-		//if touches x-coordinate, then bounce back left, touches upper y coordinate bounce up
 	}
-	
-	
-	
+
+
 	
 	
 	public boolean isColliding(Polygon mainCharacter) {
@@ -100,7 +90,9 @@ public class BreakableBlocks extends Polygon {
 		
 		return false;
 	}
+
 	
 	
 	
 }
+
