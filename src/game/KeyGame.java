@@ -1,8 +1,12 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.*;
+import java.awt.font.TextAttribute;
+import java.text.AttributedCharacterIterator;
+import java.text.AttributedString;
 import java.util.ArrayList;
 import game.BreakableBlocks.Power;
 
@@ -148,8 +152,13 @@ class KeyGame extends Game implements KeyListener{
 		else {
             new Object() { //win screen/fulfills anon class req
                 {
-                	brush.setColor(Color.MAGENTA);
+                	brush.setColor(Color.BLACK);
                 	brush.fillRect(0, 0, width, height);
+                	AttributedString attributedString = new AttributedString("Game Over!\n You Win!!");
+                    attributedString.addAttribute(TextAttribute.FONT, new Font("Serif", Font.BOLD, 40));
+                    attributedString.addAttribute(TextAttribute.FOREGROUND, Color.WHITE, 0, 21); 
+                    AttributedCharacterIterator iterator = attributedString.getIterator();
+                    brush.drawString(iterator, 50, 100);
 //                	PoC of win screen - will make nice later (flashing b/w block text ?)
 		}
             };
