@@ -2,6 +2,14 @@ package game;
 
 import java.awt.Graphics;
 
+/** 
+ * Represents a player character in the game, capable of moving left/right,
+ * jumping, and landing on different surfaces (arrays of breakableblocks)
+ * The player is a four-point polygon who
+ * @author Carrick Southall
+ * @version 21.0.6 LTS (2025-01-21) - OpenJDK Runtime Environment Temurin-21.0.6+7
+ */
+
 class Player extends Polygon{
 	private static final int stepSize = 10;
     private static Point[] shape;
