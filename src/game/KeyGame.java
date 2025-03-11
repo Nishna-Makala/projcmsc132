@@ -150,6 +150,10 @@ class KeyGame extends Game implements KeyListener{
 		}
 		
 		else {
+			  /**
+			   * Anonymous class used to render "you win" screen when player's 
+			   * center collides with Gate ivar shape.
+			   */
             new Object() { //win screen/fulfills anon class req
                 {
                 	brush.setColor(Color.BLACK);

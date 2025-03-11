@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /** 
- * 
- * 
+ * Represents a gate object in the game. Logic for opening gate handled in 
+ * KeyGame class (i.e. boolean isOpen depends on player holding Key)
  * @author Carrick Southall
  * @version 21.0.6 LTS (2025-01-21) - OpenJDK Runtime Environment Temurin-21.0.6+7
  */

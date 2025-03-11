@@ -5,7 +5,7 @@ import java.awt.Graphics;
 /** 
  * Represents a player character in the game, capable of moving left/right,
  * jumping, and landing on different surfaces (arrays of breakableblocks)
- * The player is a four-point polygon who
+ * The player is drawn as a four-point polygon
  * @author Carrick Southall
  * @version 21.0.6 LTS (2025-01-21) - OpenJDK Runtime Environment Temurin-21.0.6+7
  */
@@ -25,6 +25,9 @@ class Player extends Polygon{
 		startingPosition = new Point(145, 470);
 	}
 	
+    /**
+     * Constructs a Player object and initializes its position, state, and shape.
+     */
 	public Player() {
 		super(shape, startingPosition, 0);
 		lookingLeft = false;
@@ -32,6 +35,11 @@ class Player extends Polygon{
 		playerState = new PlayerState();
 	}
 	
+    /**
+     * Paints the player object on the screen using the provided Graphics object.
+     * 
+     * @param brush   An instance of the Graphics class
+     */
 	void paint (Graphics brush) {
         Point[] transformedShape = super.getPoints(); 
         int[] XVals = splitPoints(transformedShape, true);
@@ -39,6 +47,10 @@ class Player extends Polygon{
         brush.fillPolygon(XVals, YVals, XVals.length);
 	}
 	
+    /**
+     * Reflects the player across its y-axis by flipping 
+     * the x-coordinates of its points based on superclass position.
+     */
 	public void reflect() {
 		for (Point p : shape) {
 			p.x = 2 * center.x - p.x;
@@ -46,6 +58,12 @@ class Player extends Polygon{
 		recenterShape();
 	}
 	
+    /**
+     * Moves the player left or right based on the input.
+     * 
+     * @param leftArrowHeld indicates if the left arrow key is being held.
+     * @param rightArrowHeld indicates if the right arrow key is being held.
+     */
 	public void move(boolean leftArrowHeld, boolean rightArrowHeld) {
 		if ((leftArrowHeld && rightArrowHeld) || (!leftArrowHeld && !rightArrowHeld)) {
 			return;
@@ -86,6 +104,7 @@ class Player extends Polygon{
 	    return new Point(Math.abs(sum.x/(6*area)),Math.abs(sum.y/(6*area)));
 	  }
 	
+	
     private void recenterShape() {
 //    	copied from Polygon class
         Point origin = new Point(shape[0].x, shape[0].y);
@@ -101,6 +120,15 @@ class Player extends Polygon{
         center = findCenter();
     }
 	
+    /**
+     * Splits the points array into its X/Y components depending on the boolean 
+     * passed in (true will return array of X components)
+     * 
+     * @param PointArr the array of Points to split.
+     * @param XVal if true, return X components, otherwise return Y components.
+     * @return an array of integers containing either X or Y components of a
+     * point array
+     */
 	public static int[] splitPoints(Point[] PointArr, boolean XVal) {
 		int[] NewArr = new int[PointArr.length];
 		if (XVal) {
@@ -115,20 +143,40 @@ class Player extends Polygon{
 		return NewArr;
 	}
 	
+    /**
+     * Getter method for player position (center of Player polygon)
+     * 
+     * @return the position of the player.
+     */
 	Point getPosition() {
 		return super.position;
 	}
 	
+    /**
+     * Sets the position of player polygon to the provided x and y coordinates.
+     * 
+     * @param x the x-coordinate.
+     * @param y the y-coordinate.
+     */
 	private void setPosition(double x, double y) {
 		super.position.setX(x);
 		super.position.setY(y);
 	}
 	
+    /** 
+     * Tracks the player's jumping state (is/isn't) and provides
+     *  methods for starting jump/updating position
+     */
 	public class PlayerState {
 		double yMax;
 		static int jumpHeight = 120;
 		static int jumpSpeed = 30;
 		
+        /**
+         * Starts a jump for the player if position is valid
+         * 
+         * @param yPosition y component of player polygon position.
+         */
 		public void startJump(double yPosition) {
 			if (!isJumping && yPosition > yMax) { //currently allowing double jump because of this logic) {
 				yInit = yPosition;
@@ -137,10 +185,16 @@ class Player extends Polygon{
 			}
 		}
 		
+        /**
+         * Constructs new PlayerState obj
+         */
 		public PlayerState() {
 			super();
 		}
 		
+        /**
+         * Updates the player's jump state/position
+         */
 		public void updateJump() {
 
 			if (!executingLandOnPlatform) { 
@@ -163,8 +217,6 @@ class Player extends Polygon{
 					}
 				}
 			}
-
-			
 		}
 	}
 	
@@ -229,6 +281,7 @@ class Player extends Polygon{
 
 	 * @param direction   direction is specified in BreakableBlocks class,
 	 *  where this method is called. This can be "up" or "down"
+	 *  @return executingLandOnPlatform true if player landing on platform
 	 */
 	public boolean landOnPlatform(String direction, double yPosition){
 		
