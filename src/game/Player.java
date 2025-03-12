@@ -81,7 +81,11 @@ class Player extends Polygon{
 			super.position.setX(super.position.getX() + stepSize);
 		}
 	}
-
+	
+    /**
+     * Copied from Polygon class!
+     * Finds the area enclosed by the four points defining the player's character
+     */
 	private double findArea() {
 //    	copied from Polygon class
 	    double sum = 0;
@@ -91,6 +95,10 @@ class Player extends Polygon{
 	    return Math.abs(sum/2);
 	  }
 	
+    /**
+     * Copied from Polygon class!
+     * Finds the center point of the polygon representing the player's character
+     */
 	private Point findCenter() {
 //    	copied from Polygon class
 	    Point sum = new Point(0,0);
@@ -104,7 +112,11 @@ class Player extends Polygon{
 	    return new Point(Math.abs(sum.x/(6*area)),Math.abs(sum.y/(6*area)));
 	  }
 	
-	
+    /**
+     * Copied from Polygon class!
+     * Reorients the points around the transformation/location change 
+     * (as points are relative to each other)
+     */
     private void recenterShape() {
 //    	copied from Polygon class
         Point origin = new Point(shape[0].x, shape[0].y);
